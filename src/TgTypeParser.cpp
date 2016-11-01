@@ -114,6 +114,7 @@ Message::Ptr TgTypeParser::parseJsonAndGetMessage(const ptree& data) const {
 	result->text = data.get("text", "");
 	result->audio = tryParseJson<Audio>(&TgTypeParser::parseJsonAndGetAudio, data, "audio");
 	result->document = tryParseJson<Document>(&TgTypeParser::parseJsonAndGetDocument, data, "document");
+	result->entities = parseJsonAndGetArray<MessageEntity>(&TgTypeParser::parseJsonAndGetMessageEntity, data, "entities");
 	result->photo = parseJsonAndGetArray<PhotoSize>(&TgTypeParser::parseJsonAndGetPhotoSize, data, "photo");
 	result->sticker = tryParseJson<Sticker>(&TgTypeParser::parseJsonAndGetSticker, data, "sticker");
 	result->video = tryParseJson<Video>(&TgTypeParser::parseJsonAndGetVideo, data, "video");
@@ -241,6 +242,15 @@ string TgTypeParser::parseDocument(const Document::Ptr& object) const {
 	appendToJson(result, "file_size", object->fileSize);
 	result.erase(result.length() - 1);
 	result += '}';
+	return result;
+}
+
+MessageEntity::Ptr TgTypeParser::parseJsonAndGetMessageEntity(const ptree& data) const {
+	MessageEntity::Ptr result(new MessageEntity);
+	result->length = data.get<int32_t>("length");
+	result->offset = data.get<int32_t>("offset");
+	result->url = data.get("url", NULL);
+	result->type = data.get<string>("type");
 	return result;
 }
 

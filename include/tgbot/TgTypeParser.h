@@ -31,6 +31,7 @@
 #include "tgbot/types/User.h"
 #include "tgbot/types/Chat.h"
 #include "tgbot/types/Message.h"
+#include "tgbot/types/MessageEntity.h"
 #include "tgbot/types/PhotoSize.h"
 #include "tgbot/types/Audio.h"
 #include "tgbot/types/Document.h"
@@ -81,6 +82,7 @@ public:
 	std::string parseAudio(const Audio::Ptr& object) const;
 	Document::Ptr parseJsonAndGetDocument(const boost::property_tree::ptree& data) const;
 	std::string parseDocument(const Document::Ptr& object) const;
+	MessageEntity::Ptr parseJsonAndGetMessageEntity(const boost::property_tree::ptree& data) const;
 	Sticker::Ptr parseJsonAndGetSticker(const boost::property_tree::ptree& data) const;
 	std::string parseSticker(const Sticker::Ptr& object) const;
 	Video::Ptr parseJsonAndGetVideo(const boost::property_tree::ptree& data) const;
